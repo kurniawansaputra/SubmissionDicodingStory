@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:contentDescription="@string/content_description"
+    tools:context=".ui.activity.LoginActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingVertical="24dp">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="45dp"
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/ic_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/labelLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/login"
+            android:textAppearance="@style/TextView.CustomFontBold"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
+        <ImageView
+            android:id="@+id/ivEmail"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_email"
+            android:contentDescription="@string/content_description"
+            app:layout_constraintBottom_toBottomOf="@+id/etEmail"
+            app:layout_constraintStart_toStartOf="@+id/labelLogin"
+            app:layout_constraintTop_toTopOf="@+id/etEmail" />
+
+        <com.example.dicodingstory.customview.MyEmailEditText
+            android:id="@+id/etEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextView.CustomFontRegular"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:minHeight="48dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/labelLogin"
+            app:layout_constraintStart_toEndOf="@+id/ivEmail"
+            app:layout_constraintTop_toBottomOf="@+id/labelLogin"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <ImageView
+            android:id="@+id/ivPassword"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/ic_password"
+            app:layout_constraintBottom_toBottomOf="@+id/etPassword"
+            app:layout_constraintStart_toStartOf="@+id/ivEmail"
+            app:layout_constraintTop_toTopOf="@+id/etPassword" />
+
+        <com.example.dicodingstory.customview.MyPasswordEditText
+            android:id="@+id/etPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextView.CustomFontRegular"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:minHeight="48dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/etEmail"
+            app:layout_constraintStart_toEndOf="@+id/ivPassword"
+            app:layout_constraintTop_toBottomOf="@+id/etEmail"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <TextView
+            android:id="@+id/labelForgetPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextView.CustomFontSemiBold"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/forget_password"
+            android:textColor="@color/colorPrimary700"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
+        <com.example.dicodingstory.customview.MyButton
+            android:id="@+id/buttonLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/login"
+            app:layout_constraintEnd_toEndOf="@+id/labelForgetPassword"
+            app:layout_constraintStart_toStartOf="@+id/ivPassword"
+            app:layout_constraintTop_toBottomOf="@+id/labelForgetPassword"
+            tools:ignore="VisualLintButtonSize,DuplicateSpeakableTextCheck,TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/labelOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/or"
+            android:textAppearance="@style/TextView.CustomFontRegular"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/buttonLogin"
+            app:layout_constraintStart_toStartOf="@+id/buttonLogin"
+            app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonLoginWithGoogle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            style="@style/Button.E9E9E9"
+            android:drawableStart="@drawable/ic_google"
+            android:text="@string/login_with_google"
+            android:paddingStart="24dp"
+            android:paddingEnd="32dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="@+id/buttonLogin"
+            app:layout_constraintStart_toStartOf="@+id/buttonLogin"
+            app:layout_constraintTop_toBottomOf="@+id/labelOr"
+            tools:ignore="VisualLintButtonSize" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/buttonLoginWithGoogle"
+            app:layout_constraintStart_toStartOf="@+id/buttonLoginWithGoogle"
+            app:layout_constraintTop_toBottomOf="@+id/buttonLoginWithGoogle">
+
+            <TextView
+                android:id="@+id/labelNewMember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_to_dicoding_story"
+                android:textAppearance="@style/TextView.CustomFontRegular"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/labelRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/register"
+                android:textAppearance="@style/TextView.CustomFontSemiBold"
+                android:textColor="@color/colorPrimary700"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/labelNewMember"
+                app:layout_constraintStart_toEndOf="@+id/labelNewMember"
+                app:layout_constraintTop_toTopOf="@+id/labelNewMember" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

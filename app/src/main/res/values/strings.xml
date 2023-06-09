@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">DicodingStory</string>
+    <string name="content_description">Content Description</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="or">OR</string>
+    <string name="login_with_google">Login With Google</string>
+    <string name="new_to_dicoding_story">New to Dicoding Story?</string>
+    <string name="register">Register</string>
+    <string name="by_signing_up_you_re_agree_to_our_terms_conditions_and_privacy_police"><![CDATA[By signing up, you\'re agree to our Terms & Conditions and Privacy Police]]></string>
+    <string name="joined_us_before">Joined us before?</string>
+    <string name="name">Name</string>
+    <string name="sign_up">Sign Up</string>
+</resources>
