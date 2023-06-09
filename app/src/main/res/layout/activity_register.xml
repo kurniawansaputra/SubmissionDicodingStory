@@ -120,13 +120,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/sign_up"
-            app:layout_constraintEnd_toEndOf="@+id/labelOr"
-            app:layout_constraintStart_toStartOf="@+id/labelOr"
-            app:layout_constraintTop_toBottomOf="@+id/labelOr"
+            app:layout_constraintEnd_toEndOf="@+id/labelPrivacyPolice"
+            app:layout_constraintStart_toStartOf="@+id/labelPrivacyPolice"
+            app:layout_constraintTop_toBottomOf="@+id/labelPrivacyPolice"
             tools:ignore="VisualLintButtonSize,DuplicateSpeakableTextCheck,TextContrastCheck" />
 
         <TextView
-            android:id="@+id/labelOr"
+            android:id="@+id/labelPrivacyPolice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -146,7 +146,7 @@
             app:layout_constraintTop_toBottomOf="@+id/buttonRegister">
 
             <TextView
-                android:id="@+id/labelNewMember"
+                android:id="@+id/labelPastMember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/joined_us_before"
@@ -164,9 +164,9 @@
                 android:textAppearance="@style/TextView.CustomFontSemiBold"
                 android:textColor="@color/colorPrimary700"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/labelNewMember"
-                app:layout_constraintStart_toEndOf="@+id/labelNewMember"
-                app:layout_constraintTop_toTopOf="@+id/labelNewMember" />
+                app:layout_constraintBottom_toBottomOf="@+id/labelPastMember"
+                app:layout_constraintStart_toEndOf="@+id/labelPastMember"
+                app:layout_constraintTop_toTopOf="@+id/labelPastMember" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

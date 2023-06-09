@@ -29,6 +29,12 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun init() {
         registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
+        registerViewModel.isLoading.observe(this) {
+            setLoading(it)
+        }
+        registerViewModel.onFailure.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
 
         setListener()
     }
@@ -56,10 +62,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register() {
-        registerViewModel.isLoading.observe(this) {
-            setLoading(it)
-        }
-
         registerViewModel.register(name, email, password)
         registerViewModel.register.observe(this) {
             val error = it.error
@@ -68,10 +70,6 @@ class RegisterActivity : AppCompatActivity() {
             if (error == false) {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             }
-        }
-
-        registerViewModel.onFailure.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 
