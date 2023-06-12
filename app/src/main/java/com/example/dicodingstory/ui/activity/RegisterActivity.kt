@@ -1,9 +1,8 @@
 package com.example.dicodingstory.ui.activity
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.databinding.ActivityRegisterBinding
 import com.example.dicodingstory.util.hideLoading
@@ -36,7 +35,16 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
+        setToolbar()
         setListener()
+    }
+
+    private fun setToolbar() {
+        binding.apply {
+            toolbar.setNavigationOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
     }
 
     private fun setListener() {
@@ -51,12 +59,6 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     register()
                 }
-            }
-
-            labelLogin.setOnClickListener {
-                val  intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
             }
         }
     }

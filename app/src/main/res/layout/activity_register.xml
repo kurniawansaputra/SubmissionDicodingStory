@@ -1,175 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:contentDescription="@string/content_description"
     tools:context=".ui.activity.RegisterActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingVertical="24dp">
+        android:layout_height="?attr/actionBarSize"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ivLogo"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="45dp"
-            android:contentDescription="@string/content_description"
-            android:src="@drawable/ic_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ImageContrastCheck" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:title="@string/sign_up"
+            app:titleTextAppearance="@style/TitleTextAppearance"
+            app:navigationIcon="@drawable/ic_back"/>
 
-        <TextView
-            android:id="@+id/labelSignUp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="24dp"
-            android:text="@string/sign_up"
-            android:textAppearance="@style/TextView.CustomFontBold"
-            android:textSize="28sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageView
-            android:id="@+id/ivEmail"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_email"
-            android:contentDescription="@string/content_description"
-            app:layout_constraintBottom_toBottomOf="@+id/etEmail"
-            app:layout_constraintStart_toStartOf="@+id/labelSignUp"
-            app:layout_constraintTop_toTopOf="@+id/etEmail" />
-
-        <com.example.dicodingstory.customview.MyEmailEditText
-            android:id="@+id/etEmail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextView.CustomFontRegular"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:minHeight="48dp"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/labelSignUp"
-            app:layout_constraintStart_toEndOf="@+id/ivEmail"
-            app:layout_constraintTop_toBottomOf="@+id/labelSignUp"
-            tools:ignore="VisualLintTextFieldSize" />
-
-        <ImageView
-            android:id="@+id/ivPassword"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/content_description"
-            android:src="@drawable/ic_password"
-            app:layout_constraintBottom_toBottomOf="@+id/etPassword"
-            app:layout_constraintStart_toStartOf="@+id/ivEmail"
-            app:layout_constraintTop_toTopOf="@+id/etPassword" />
-
-        <com.example.dicodingstory.customview.MyPasswordEditText
-            android:id="@+id/etPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:minHeight="48dp"
-            android:textAppearance="@style/TextView.CustomFontRegular"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/etName"
-            app:layout_constraintStart_toEndOf="@+id/ivPassword"
-            app:layout_constraintTop_toBottomOf="@+id/etName"
-            tools:ignore="VisualLintTextFieldSize" />
-
-        <ImageView
-            android:id="@+id/ivName"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/content_description"
-            android:src="@drawable/ic_user"
-            app:layout_constraintBottom_toBottomOf="@+id/etName"
-            app:layout_constraintStart_toStartOf="@+id/ivEmail"
-            app:layout_constraintTop_toTopOf="@+id/etName" />
-
-        <EditText
-            android:id="@+id/etName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:hint="@string/name"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:textAppearance="@style/TextView.CustomFontRegular"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/etEmail"
-            app:layout_constraintStart_toEndOf="@+id/ivName"
-            app:layout_constraintTop_toBottomOf="@+id/etEmail"
-            tools:ignore="VisualLintTextFieldSize"
-            android:importantForAutofill="no" />
-
-        <com.example.dicodingstory.customview.MyButton
-            android:id="@+id/buttonRegister"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/sign_up"
-            app:layout_constraintEnd_toEndOf="@+id/labelPrivacyPolice"
-            app:layout_constraintStart_toStartOf="@+id/labelPrivacyPolice"
-            app:layout_constraintTop_toBottomOf="@+id/labelPrivacyPolice"
-            tools:ignore="VisualLintButtonSize,DuplicateSpeakableTextCheck,TextContrastCheck" />
-
-        <TextView
-            android:id="@+id/labelPrivacyPolice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/by_signing_up_you_re_agree_to_our_terms_conditions_and_privacy_police"
-            android:textAppearance="@style/TextView.CustomFontRegular"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/etPassword"
-            app:layout_constraintStart_toStartOf="@+id/ivPassword"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/buttonRegister"
-            app:layout_constraintStart_toStartOf="@+id/buttonRegister"
-            app:layout_constraintTop_toBottomOf="@+id/buttonRegister">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="24dp">
 
-            <TextView
-                android:id="@+id/labelPastMember"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/ivEmail"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="24dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_email"
+                app:layout_constraintBottom_toBottomOf="@+id/etEmail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etEmail" />
+
+            <com.example.dicodingstory.customview.MyEmailEditText
+                android:id="@+id/etEmail"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/joined_us_before"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="24dp"
+                android:minHeight="48dp"
                 android:textAppearance="@style/TextView.CustomFontRegular"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivEmail"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="VisualLintTextFieldSize" />
+
+            <ImageView
+                android:id="@+id/ivPassword"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_password"
+                app:layout_constraintBottom_toBottomOf="@+id/etPassword"
+                app:layout_constraintStart_toStartOf="@+id/ivEmail"
+                app:layout_constraintTop_toTopOf="@+id/etPassword" />
+
+            <com.example.dicodingstory.customview.MyPasswordEditText
+                android:id="@+id/etPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:minHeight="48dp"
+                android:textAppearance="@style/TextView.CustomFontRegular"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/etName"
+                app:layout_constraintStart_toEndOf="@+id/ivPassword"
+                app:layout_constraintTop_toBottomOf="@+id/etName"
+                tools:ignore="VisualLintTextFieldSize" />
+
+            <ImageView
+                android:id="@+id/ivName"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_user"
+                app:layout_constraintBottom_toBottomOf="@+id/etName"
+                app:layout_constraintStart_toStartOf="@+id/ivEmail"
+                app:layout_constraintTop_toTopOf="@+id/etName" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:textAppearance="@style/TextView.CustomFontRegular"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/etEmail"
+                app:layout_constraintStart_toEndOf="@+id/ivName"
+                app:layout_constraintTop_toBottomOf="@+id/etEmail"
+                tools:ignore="VisualLintTextFieldSize"
+                android:importantForAutofill="no" />
+
+            <com.example.dicodingstory.customview.MyButton
+                android:id="@+id/buttonRegister"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/sign_up"
+                app:layout_constraintEnd_toEndOf="@+id/labelOr"
+                app:layout_constraintStart_toStartOf="@+id/labelOr"
+                app:layout_constraintTop_toBottomOf="@+id/labelOr"
+                tools:ignore="VisualLintButtonSize,DuplicateSpeakableTextCheck,TextContrastCheck" />
 
             <TextView
-                android:id="@+id/labelLogin"
-                android:layout_width="wrap_content"
+                android:id="@+id/labelOr"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@string/login"
-                android:textAppearance="@style/TextView.CustomFontSemiBold"
-                android:textColor="@color/colorPrimary700"
+                android:layout_marginTop="16dp"
+                android:text="@string/by_signing_up_you_re_agree_to_our_terms_conditions_and_privacy_police"
+                android:textAppearance="@style/TextView.CustomFontRegular"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/labelPastMember"
-                app:layout_constraintStart_toEndOf="@+id/labelPastMember"
-                app:layout_constraintTop_toTopOf="@+id/labelPastMember" />
+                app:layout_constraintEnd_toEndOf="@+id/etPassword"
+                app:layout_constraintStart_toStartOf="@+id/ivPassword"
+                app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

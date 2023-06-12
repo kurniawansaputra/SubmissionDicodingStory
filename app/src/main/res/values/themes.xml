@@ -32,8 +32,9 @@
         <item name="android:fontFamily">@font/quicksand_bold</item>
     </style>
 
-    <style name="TextView.Error">
-        <item name="android:fontFamily">@font/quicksand_bold</item>
+    <style name="TitleTextAppearance">
+        <item name="android:fontFamily">@font/quicksand_semi_bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Button" />
