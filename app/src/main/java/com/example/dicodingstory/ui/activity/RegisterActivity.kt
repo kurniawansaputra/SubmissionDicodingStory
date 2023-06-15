@@ -131,6 +131,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun goToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()
     }
