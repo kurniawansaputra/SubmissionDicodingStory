@@ -46,4 +46,10 @@
         <item name="android:fontFamily">@font/quicksand_semi_bold</item>
     </style>
 
+    <style name="Theme.Toolbar" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
+        <item name="android:fontFamily">@font/quicksand_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

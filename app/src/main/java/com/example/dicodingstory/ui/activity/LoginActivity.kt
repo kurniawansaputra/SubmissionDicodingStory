@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.databinding.ActivityLoginBinding
+import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.util.hideLoading
 import com.example.dicodingstory.util.showLoading
 import com.example.dicodingstory.viewmodel.LoginViewModel
@@ -36,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         setListener()
+        checkIsLogin()
     }
 
     private fun setListener() {
@@ -49,20 +51,37 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     loginViewModel.login(email, password)
                     loginViewModel.login.observe(this@LoginActivity) {
+                        val user = it
                         val error = it.error
-                        val message = it.message
 
                         if (error == false) {
-                            Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
+                            if (user != null) {
+                                HawkStorage.instance(this@LoginActivity).setUser(user)
+                                goToMain()
+                            }
                         }
                     }
                 }
             }
+
             labelRegister.setOnClickListener {
                 val  intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
             }
         }
+    }
+
+    private fun checkIsLogin() {
+        val isLogin = HawkStorage.instance(this).isLogin()
+        if (isLogin) {
+           goToMain()
+        }
+    }
+
+    private fun goToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun setLoading(isLoading: Boolean) {
