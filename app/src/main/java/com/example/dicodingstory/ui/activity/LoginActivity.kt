@@ -2,6 +2,9 @@ package com.example.dicodingstory.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
+        textWatcher()
         setListener()
         checkIsLogin()
     }
@@ -43,22 +47,15 @@ class LoginActivity : AppCompatActivity() {
     private fun setListener() {
         binding.apply {
             buttonLogin.setOnClickListener {
-                email = binding.etEmail.text.toString().trim()
-                password = binding.etPassword.text.toString().trim()
+                loginViewModel.login(email, password)
+                loginViewModel.login.observe(this@LoginActivity) {
+                    val user = it
+                    val error = it.error
 
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(this@LoginActivity, "Column should not be empty", Toast.LENGTH_SHORT).show()
-                } else {
-                    loginViewModel.login(email, password)
-                    loginViewModel.login.observe(this@LoginActivity) {
-                        val user = it
-                        val error = it.error
-
-                        if (error == false) {
-                            if (user != null) {
-                                HawkStorage.instance(this@LoginActivity).setUser(user)
-                                goToMain()
-                            }
+                    if (error == false) {
+                        if (user != null) {
+                            HawkStorage.instance(this@LoginActivity).setUser(user)
+                            goToMain()
                         }
                     }
                 }
@@ -68,6 +65,50 @@ class LoginActivity : AppCompatActivity() {
                 val  intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
             }
+        }
+    }
+
+    private fun textWatcher() {
+        binding.apply {
+            etEmail.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    validateInput()
+                }
+
+                override fun afterTextChanged(s: Editable) {
+
+                }
+            })
+
+            etPassword.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    validateInput()
+                }
+
+                override fun afterTextChanged(s: Editable) {
+
+                }
+            })
+        }
+    }
+
+    private fun validateInput() {
+        binding.apply {
+            email = etEmail.text.toString()
+            password = etPassword.text.toString()
+
+            val isEmailValidated = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            val isPasswordValidated = password.isNotEmpty() && password.length > 8
+
+            buttonLogin.isEnabled = isEmailValidated && isPasswordValidated
         }
     }
 
