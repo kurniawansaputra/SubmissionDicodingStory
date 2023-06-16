@@ -1,13 +1,10 @@
 package com.example.dicodingstory.ui.activity
 
-import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ActivityMapsBinding
@@ -75,7 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        )
 //        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(dicodingSpace, 15f))
 
-        getMyLocation()
+//        getMyLocation()
         setMapStyle()
         addManyMarker()
     }
@@ -132,27 +129,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun getMyLocation() {
-        if (ContextCompat.checkSelfPermission(
-                this.applicationContext,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            mMap.isMyLocationEnabled = true
-        } else {
-            requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
-        }
-    }
-
-    // Permission for access location
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                getMyLocation()
-            }
-        }
+//    private fun getMyLocation() {
+//        if (ContextCompat.checkSelfPermission(
+//                this.applicationContext,
+//                android.Manifest.permission.ACCESS_FINE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED
+//        ) {
+//            mMap.isMyLocationEnabled = true
+//        } else {
+//            requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
+//        }
+//    }
+//
+//    // Permission for access location
+//    private val requestPermissionLauncher =
+//        registerForActivityResult(
+//            ActivityResultContracts.RequestPermission()
+//        ) { isGranted: Boolean ->
+//            if (isGranted) {
+//                getMyLocation()
+//            }
+//        }
 
     companion object {
         private const val TAG = "MapsActivity"
