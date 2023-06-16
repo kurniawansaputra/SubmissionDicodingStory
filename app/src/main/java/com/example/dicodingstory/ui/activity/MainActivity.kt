@@ -117,10 +117,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.menuMaps -> {
+                goToMaps()
+                true
+            }
             R.id.menuLogout -> {
-                binding.apply {
-                    dialogLogOut()
-                }
+                dialogLogOut()
                 true
             }
             else -> true
@@ -148,6 +150,11 @@ class MainActivity : AppCompatActivity() {
         dialog.setCancelable(true)
         dialog.show()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun goToMaps() {
+        val intent = Intent(this, MapsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun logout() {
