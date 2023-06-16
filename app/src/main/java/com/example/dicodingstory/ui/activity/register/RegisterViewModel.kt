@@ -1,22 +1,19 @@
-package com.example.dicodingstory.viewmodel
+package com.example.dicodingstory.ui.activity.register
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.model.StoriesResponse
-import com.example.dicodingstory.network.ApiConfig
+import com.example.dicodingstory.data.remote.response.RegisterResponse
+import com.example.dicodingstory.data.remote.network.ApiConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel: ViewModel() {
-    private val _stories = MutableLiveData<StoriesResponse>()
-    val stories: LiveData<StoriesResponse> = _stories
-
-    private val _isRefresh = MutableLiveData<Boolean>()
-    val isRefresh: LiveData<Boolean> = _isRefresh
+class RegisterViewModel: ViewModel() {
+    private val _register = MutableLiveData<RegisterResponse>()
+    val register: LiveData<RegisterResponse> = _register
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -24,19 +21,17 @@ class MainViewModel: ViewModel() {
     private val _onFailure = MutableLiveData<String>()
     val onFailure: LiveData<String> = _onFailure
 
-    fun getStories(token: String) {
+    fun register(name: String, email: String, password: String) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = ApiConfig.getApiService().getStories("Bearer $token", 1)
+                val response = ApiConfig.getApiService().register(name, email, password)
                 withContext(Dispatchers.Main) {
-                    _isRefresh.value = false
                     _isLoading.value = false
-                    _stories.value = response
+                    _register.value = response
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    _isRefresh.value = false
                     _isLoading.value = false
                     _onFailure.value = e.message
                     Log.e(TAG, "onFailure: ${e.message.toString()}")
@@ -46,6 +41,6 @@ class MainViewModel: ViewModel() {
     }
 
     companion object {
-        private const val TAG = "MainViewModel"
+        private const val TAG = "RegisterViewModel"
     }
 }

@@ -58,18 +58,18 @@
             android:name=".ui.activity.CameraActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.AddStoryActivity"
+            android:name=".ui.activity.addstory.AddStoryActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.DetailStoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.RegisterActivity"
+            android:name=".ui.activity.register.RegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.login.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -79,7 +79,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.main.MainActivity"
             android:exported="false" />
 
         <provider

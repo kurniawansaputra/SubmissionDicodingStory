@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ActivityDetailStoryBinding
-import com.example.dicodingstory.model.ListStoryItem
+import com.example.dicodingstory.data.remote.response.ListStoryItem
 import kotlin.random.Random
 
 class DetailStoryActivity : AppCompatActivity() {

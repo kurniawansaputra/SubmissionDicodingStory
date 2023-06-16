@@ -1,9 +1,9 @@
-package com.example.dicodingstory.network
+package com.example.dicodingstory.data.remote.network
 
-import com.example.dicodingstory.model.NewStoryResponse
-import com.example.dicodingstory.model.RegisterResponse
-import com.example.dicodingstory.model.StoriesResponse
-import com.example.dicodingstory.model.UserResponse
+import com.example.dicodingstory.data.remote.response.NewStoryResponse
+import com.example.dicodingstory.data.remote.response.RegisterResponse
+import com.example.dicodingstory.data.remote.response.StoriesResponse
+import com.example.dicodingstory.data.remote.response.UserResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field

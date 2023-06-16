@@ -1,12 +1,12 @@
-package com.example.dicodingstory.viewmodel
+package com.example.dicodingstory.ui.activity.addstory
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.model.NewStoryResponse
-import com.example.dicodingstory.network.ApiConfig
+import com.example.dicodingstory.data.remote.response.NewStoryResponse
+import com.example.dicodingstory.data.remote.network.ApiConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

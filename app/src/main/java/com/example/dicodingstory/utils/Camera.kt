@@ -1,4 +1,4 @@
-package com.example.dicodingstory.util
+package com.example.dicodingstory.utils
 
 import android.app.Application
 import android.content.ContentResolver

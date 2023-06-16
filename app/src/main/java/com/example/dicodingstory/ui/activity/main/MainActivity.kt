@@ -1,4 +1,4 @@
-package com.example.dicodingstory.ui.activity
+package com.example.dicodingstory.ui.activity.main
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,10 +16,12 @@ import com.example.dicodingstory.adapter.StoryAdapter
 import com.example.dicodingstory.databinding.ActivityMainBinding
 import com.example.dicodingstory.databinding.LayoutWarningBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
-import com.example.dicodingstory.model.ListStoryItem
-import com.example.dicodingstory.util.hideLoading
-import com.example.dicodingstory.util.showLoading
-import com.example.dicodingstory.viewmodel.MainViewModel
+import com.example.dicodingstory.data.remote.response.ListStoryItem
+import com.example.dicodingstory.ui.activity.MapsActivity
+import com.example.dicodingstory.ui.activity.addstory.AddStoryActivity
+import com.example.dicodingstory.ui.activity.login.LoginActivity
+import com.example.dicodingstory.utils.hideLoading
+import com.example.dicodingstory.utils.showLoading
 
 class MainActivity : AppCompatActivity() {
     private lateinit var token: String

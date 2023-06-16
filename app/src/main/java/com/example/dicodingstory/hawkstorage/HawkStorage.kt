@@ -1,7 +1,7 @@
 package com.example.dicodingstory.hawkstorage
 
 import android.content.Context
-import com.example.dicodingstory.model.UserResponse
+import com.example.dicodingstory.data.remote.response.UserResponse
 import com.orhanobut.hawk.Hawk
 
 class HawkStorage {
@@ -9,7 +9,7 @@ class HawkStorage {
         Hawk.put(USER_KEY, user)
     }
 
-    fun getUser(): UserResponse{
+    fun getUser(): UserResponse {
         return Hawk.get(USER_KEY)
     }
 

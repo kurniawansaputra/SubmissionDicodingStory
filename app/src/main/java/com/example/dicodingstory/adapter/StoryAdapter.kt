@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ItemRowStoryBinding
-import com.example.dicodingstory.model.ListStoryItem
+import com.example.dicodingstory.data.remote.response.ListStoryItem
 import com.example.dicodingstory.ui.activity.DetailStoryActivity
 import com.example.dicodingstory.ui.activity.DetailStoryActivity.Companion.EXTRA_STORY
 import kotlin.random.Random

@@ -1,4 +1,4 @@
-package com.example.dicodingstory.ui.activity
+package com.example.dicodingstory.ui.activity.addstory
 
 import android.Manifest
 import android.content.Intent
@@ -25,13 +25,14 @@ import androidx.core.content.FileProvider
 import com.example.dicodingstory.databinding.ActivityAddStoryBinding
 import com.example.dicodingstory.databinding.LayoutAddPhotoBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
-import com.example.dicodingstory.util.createCustomTempFile
-import com.example.dicodingstory.util.hideLoading
-import com.example.dicodingstory.util.reduceFileImage
-import com.example.dicodingstory.util.rotateFile
-import com.example.dicodingstory.util.showLoading
-import com.example.dicodingstory.util.uriToFile
-import com.example.dicodingstory.viewmodel.AddStoryViewModel
+import com.example.dicodingstory.ui.activity.CameraActivity
+import com.example.dicodingstory.ui.activity.main.MainActivity
+import com.example.dicodingstory.utils.createCustomTempFile
+import com.example.dicodingstory.utils.hideLoading
+import com.example.dicodingstory.utils.reduceFileImage
+import com.example.dicodingstory.utils.rotateFile
+import com.example.dicodingstory.utils.showLoading
+import com.example.dicodingstory.utils.uriToFile
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {

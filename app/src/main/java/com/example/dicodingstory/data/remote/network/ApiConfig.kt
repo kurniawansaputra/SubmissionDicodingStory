@@ -1,4 +1,4 @@
-package com.example.dicodingstory.network
+package com.example.dicodingstory.data.remote.network
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

@@ -11,8 +11,8 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.example.dicodingstory.databinding.ActivityCameraBinding
-import com.example.dicodingstory.ui.activity.AddStoryActivity.Companion.CAMERA_X_RESULT
-import com.example.dicodingstory.util.createFile
+import com.example.dicodingstory.ui.activity.addstory.AddStoryActivity.Companion.CAMERA_X_RESULT
+import com.example.dicodingstory.utils.createFile
 
 class CameraActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null

@@ -1,4 +1,4 @@
-package com.example.dicodingstory.ui.activity
+package com.example.dicodingstory.ui.activity.register
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,22 +8,22 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dicodingstory.databinding.ActivityLoginBinding
-import com.example.dicodingstory.hawkstorage.HawkStorage
-import com.example.dicodingstory.util.hideLoading
-import com.example.dicodingstory.util.showLoading
-import com.example.dicodingstory.viewmodel.LoginViewModel
+import com.example.dicodingstory.databinding.ActivityRegisterBinding
+import com.example.dicodingstory.ui.activity.login.LoginActivity
+import com.example.dicodingstory.utils.hideLoading
+import com.example.dicodingstory.utils.showLoading
 
-class LoginActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
+    private lateinit var name: String
     private lateinit var email: String
     private lateinit var password: String
-    private val loginViewModel by viewModels<LoginViewModel>()
+    private val registerViewModel by viewModels<RegisterViewModel>()
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
@@ -31,21 +31,24 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        setObsLogin()
+        setObsRegister()
+        setToolbar()
         textWatcher()
         setListener()
-        checkIsLogin()
+    }
+
+    private fun setToolbar() {
+        binding.apply {
+            toolbar.setNavigationOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
     }
 
     private fun setListener() {
         binding.apply {
-            buttonLogin.setOnClickListener {
-                loginViewModel.login(email, password)
-            }
-
-            labelRegister.setOnClickListener {
-                val  intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-                startActivity(intent)
+            buttonRegister.setOnClickListener {
+                registerViewModel.register(name, email, password)
             }
         }
     }
@@ -53,6 +56,20 @@ class LoginActivity : AppCompatActivity() {
     private fun textWatcher() {
         binding.apply {
             etEmail.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    validateInput()
+                }
+
+                override fun afterTextChanged(s: Editable) {
+
+                }
+            })
+
+            etName.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
                 }
@@ -84,45 +101,39 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateInput() {
         binding.apply {
+            name = etName.text.toString()
             email = etEmail.text.toString()
             password = etPassword.text.toString()
 
+            val isNameValidated = name.isNotEmpty()
             val isEmailValidated = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
             val isPasswordValidated = password.isNotEmpty() && password.length >= 8
 
-            buttonLogin.isEnabled = isEmailValidated && isPasswordValidated
+            buttonRegister.isEnabled = isEmailValidated && isPasswordValidated && isNameValidated
         }
     }
 
-    private fun setObsLogin() {
-        loginViewModel.isLoading.observe(this) {
+    private fun setObsRegister() {
+        registerViewModel.isLoading.observe(this) {
             setLoading(it)
         }
-        loginViewModel.onFailure.observe(this) {
+        registerViewModel.onFailure.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
-        loginViewModel.login.observe(this@LoginActivity) {
-            val user = it
+        registerViewModel.register.observe(this@RegisterActivity) {
             val error = it.error
+            val message = it.message
 
             if (error == false) {
-                if (user != null) {
-                    HawkStorage.instance(this@LoginActivity).setUser(user)
-                    goToMain()
-                }
+                goToLogin()
+                Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun checkIsLogin() {
-        val isLogin = HawkStorage.instance(this).isLogin()
-        if (isLogin) {
-           goToMain()
-        }
-    }
-
-    private fun goToMain() {
-        val intent = Intent(this, MainActivity::class.java)
+    private fun goToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()
     }

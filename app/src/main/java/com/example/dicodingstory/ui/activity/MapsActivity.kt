@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ActivityMapsBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
-import com.example.dicodingstory.viewmodel.MainViewModel
+import com.example.dicodingstory.ui.activity.main.MainViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

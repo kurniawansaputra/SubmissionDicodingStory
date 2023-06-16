@@ -1,4 +1,4 @@
-package com.example.dicodingstory.model
+package com.example.dicodingstory.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
