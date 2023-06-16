@@ -81,21 +81,8 @@ class AddStoryActivity : AppCompatActivity() {
         }
 
         addStoryViewModel = ViewModelProvider(this)[AddStoryViewModel::class.java]
-        addStoryViewModel.isLoading.observe(this) {
-            setLoading(it)
-        }
-        addStoryViewModel.onFailure.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-        addStoryViewModel.add.observe(this) {
-            val error = it.error
-            val message = it.message
-            if (error == false) {
-                goToMain()
-                Toast.makeText(this, "$message", Toast.LENGTH_SHORT).show()
-            }
-        }
 
+        setObsAddStory()
         setPref()
         setToolbar()
         setListener()
@@ -272,6 +259,23 @@ class AddStoryActivity : AppCompatActivity() {
             addStoryViewModel.addStories(token, description, file)
         } else {
             Toast.makeText(this@AddStoryActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setObsAddStory() {
+        addStoryViewModel.isLoading.observe(this) {
+            setLoading(it)
+        }
+        addStoryViewModel.onFailure.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+        addStoryViewModel.add.observe(this) {
+            val error = it.error
+            val message = it.message
+            if (error == false) {
+                goToMain()
+                Toast.makeText(this, "$message", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

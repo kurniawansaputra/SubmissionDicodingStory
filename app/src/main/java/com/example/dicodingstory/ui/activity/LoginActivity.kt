@@ -32,24 +32,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun init() {
         loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        loginViewModel.isLoading.observe(this) {
-            setLoading(it)
-        }
-        loginViewModel.onFailure.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-        loginViewModel.login.observe(this@LoginActivity) {
-            val user = it
-            val error = it.error
 
-            if (error == false) {
-                if (user != null) {
-                    HawkStorage.instance(this@LoginActivity).setUser(user)
-                    goToMain()
-                }
-            }
-        }
-
+        setObsLogin()
         textWatcher()
         setListener()
         checkIsLogin()
@@ -109,6 +93,26 @@ class LoginActivity : AppCompatActivity() {
             val isPasswordValidated = password.isNotEmpty() && password.length >= 8
 
             buttonLogin.isEnabled = isEmailValidated && isPasswordValidated
+        }
+    }
+
+    private fun setObsLogin() {
+        loginViewModel.isLoading.observe(this) {
+            setLoading(it)
+        }
+        loginViewModel.onFailure.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+        loginViewModel.login.observe(this@LoginActivity) {
+            val user = it
+            val error = it.error
+
+            if (error == false) {
+                if (user != null) {
+                    HawkStorage.instance(this@LoginActivity).setUser(user)
+                    goToMain()
+                }
+            }
         }
     }
 

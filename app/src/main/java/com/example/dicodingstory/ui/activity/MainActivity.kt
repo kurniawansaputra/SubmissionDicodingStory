@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
+        setObsListStories()
         setPref()
         setToolbar()
         swipeRefresh()
@@ -65,13 +67,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListStory() {
+        mainViewModel.getStories(token)
+    }
+
+    private fun setObsListStories() {
         mainViewModel.isRefresh.observe(this) {
             setRefresh(it)
         }
         mainViewModel.isLoading.observe(this) {
             setLoading(it)
         }
-        mainViewModel.getStories(token)
+        mainViewModel.onFailure.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
         mainViewModel.stories.observe(this) {
             val error = it.error
             if (error == false) {

@@ -32,22 +32,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun init() {
         registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
-        registerViewModel.isLoading.observe(this) {
-            setLoading(it)
-        }
-        registerViewModel.onFailure.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-        registerViewModel.register.observe(this@RegisterActivity) {
-            val error = it.error
-            val message = it.message
 
-            if (error == false) {
-                goToLogin()
-                Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
-            }
-        }
-
+        setObsRegister()
         setToolbar()
         textWatcher()
         setListener()
@@ -126,6 +112,24 @@ class RegisterActivity : AppCompatActivity() {
             val isPasswordValidated = password.isNotEmpty() && password.length >= 8
 
             buttonRegister.isEnabled = isEmailValidated && isPasswordValidated && isNameValidated
+        }
+    }
+
+    private fun setObsRegister() {
+        registerViewModel.isLoading.observe(this) {
+            setLoading(it)
+        }
+        registerViewModel.onFailure.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+        registerViewModel.register.observe(this@RegisterActivity) {
+            val error = it.error
+            val message = it.message
+
+            if (error == false) {
+                goToLogin()
+                Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
