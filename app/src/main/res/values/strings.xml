@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DicodingStory</string>
+    <string name="app_name">Dicoding Story</string>
     <string name="content_description">Content Description</string>
     <string name="login">Login</string>
     <string name="forget_password">Forget Password?</string>
@@ -8,13 +8,12 @@
     <string name="new_to_dicoding_story">New to Dicoding Story?</string>
     <string name="register">Register</string>
     <string name="by_signing_up_you_re_agree_to_our_terms_conditions_and_privacy_police"><![CDATA[By signing up, you\'re agree to our Terms & Conditions and Privacy Police]]></string>
-    <string name="joined_us_before">Joined us before?</string>
     <string name="name">Name</string>
     <string name="sign_up">Sign Up</string>
     <string name="log_out">Log Out</string>
     <string name="are_you_sure_you_want_to_log_out_the_app">Are you sure you want to log out the app?</string>
     <string name="no">No</string>
-    <string name="map">Map</string>
+    <string name="map">Maps</string>
     <string name="add_story">Add Story</string>
     <string name="detail_story">Detail Story</string>
     <string name="description">Description</string>
