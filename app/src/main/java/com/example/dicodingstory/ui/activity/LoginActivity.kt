@@ -38,6 +38,17 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.onFailure.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+        loginViewModel.login.observe(this@LoginActivity) {
+            val user = it
+            val error = it.error
+
+            if (error == false) {
+                if (user != null) {
+                    HawkStorage.instance(this@LoginActivity).setUser(user)
+                    goToMain()
+                }
+            }
+        }
 
         textWatcher()
         setListener()
@@ -48,17 +59,6 @@ class LoginActivity : AppCompatActivity() {
         binding.apply {
             buttonLogin.setOnClickListener {
                 loginViewModel.login(email, password)
-                loginViewModel.login.observe(this@LoginActivity) {
-                    val user = it
-                    val error = it.error
-
-                    if (error == false) {
-                        if (user != null) {
-                            HawkStorage.instance(this@LoginActivity).setUser(user)
-                            goToMain()
-                        }
-                    }
-                }
             }
 
             labelRegister.setOnClickListener {

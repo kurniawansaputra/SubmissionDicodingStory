@@ -38,6 +38,15 @@ class RegisterActivity : AppCompatActivity() {
         registerViewModel.onFailure.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+        registerViewModel.register.observe(this@RegisterActivity) {
+            val error = it.error
+            val message = it.message
+
+            if (error == false) {
+                goToLogin()
+                Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
+            }
+        }
 
         setToolbar()
         textWatcher()
@@ -56,15 +65,6 @@ class RegisterActivity : AppCompatActivity() {
         binding.apply {
             buttonRegister.setOnClickListener {
                 registerViewModel.register(name, email, password)
-                registerViewModel.register.observe(this@RegisterActivity) {
-                    val error = it.error
-                    val message = it.message
-
-                    if (error == false) {
-                        goToLogin()
-                        Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
-                    }
-                }
             }
         }
     }

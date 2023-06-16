@@ -21,17 +21,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.databinding.ActivityAddStoryBinding
 import com.example.dicodingstory.databinding.LayoutAddPhotoBinding
+import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.util.createCustomTempFile
+import com.example.dicodingstory.util.hideLoading
+import com.example.dicodingstory.util.reduceFileImage
 import com.example.dicodingstory.util.rotateFile
+import com.example.dicodingstory.util.showLoading
 import com.example.dicodingstory.util.uriToFile
+import com.example.dicodingstory.viewmodel.AddStoryViewModel
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {
+    private lateinit var token: String
     private lateinit var description: String
     private var myFile: File? = null
+    private var getFile: File? = null
     private lateinit var currentPhotoPath: String
+    private lateinit var addStoryViewModel: AddStoryViewModel
 
     private lateinit var binding: ActivityAddStoryBinding
 
@@ -71,6 +80,22 @@ class AddStoryActivity : AppCompatActivity() {
             )
         }
 
+        addStoryViewModel = ViewModelProvider(this)[AddStoryViewModel::class.java]
+        addStoryViewModel.isLoading.observe(this) {
+            setLoading(it)
+        }
+        addStoryViewModel.onFailure.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+        addStoryViewModel.add.observe(this) {
+            val error = it.error
+            val message = it.message
+            if (error == false) {
+                goToMain()
+                Toast.makeText(this, "$message", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         setPref()
         setToolbar()
         setListener()
@@ -78,6 +103,8 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     private fun setPref() {
+        val user = HawkStorage.instance(this).getUser()
+        token = user.loginResult?.token.toString()
     }
 
     private fun setToolbar() {
@@ -94,7 +121,7 @@ class AddStoryActivity : AppCompatActivity() {
                 dialogAddPhoto()
             }
             buttonAdd.setOnClickListener {
-                Toast.makeText(this@AddStoryActivity, "${myFile.toString()}, $description", Toast.LENGTH_SHORT).show()
+                uploadStory()
             }
         }
     }
@@ -137,6 +164,7 @@ class AddStoryActivity : AppCompatActivity() {
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
             myFile?.let { file ->
                 rotateFile(file, isBackCamera)
+                getFile = file
                 binding.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
 
@@ -171,10 +199,12 @@ class AddStoryActivity : AppCompatActivity() {
     ) {
         if (it.resultCode == RESULT_OK) {
             myFile = File(currentPhotoPath)
-
             myFile.let { file ->
-//                rotateFile(file)
                 if (file != null) {
+                    rotateFile(file)
+                }
+                if (file != null) {
+                    getFile = file
                     binding.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(file.path))
                 }
             }
@@ -204,6 +234,7 @@ class AddStoryActivity : AppCompatActivity() {
             val selectedImg = result.data?.data as Uri
             selectedImg.let { uri ->
                 myFile = uriToFile(uri, this@AddStoryActivity)
+                getFile = myFile
                 binding.ivPhoto.setImageURI(uri)
 
                 if (myFile!!.exists()) {
@@ -235,6 +266,15 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
+    private fun uploadStory() {
+        if (getFile != null) {
+            val file = reduceFileImage(getFile as File)
+            addStoryViewModel.addStories(token, description, file)
+        } else {
+            Toast.makeText(this@AddStoryActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun validateInput() {
         binding.apply {
             description = etDesc.text.toString()
@@ -243,6 +283,21 @@ class AddStoryActivity : AppCompatActivity() {
             val isDescriptionNotEmpty = description.isNotEmpty()
 
             buttonAdd.isEnabled = isPhotoNotEmpty && isDescriptionNotEmpty
+        }
+    }
+
+    private fun goToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        if (isLoading) {
+            showLoading(this)
+        } else {
+            hideLoading()
         }
     }
 
