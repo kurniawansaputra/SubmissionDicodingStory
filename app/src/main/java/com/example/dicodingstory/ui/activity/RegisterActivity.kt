@@ -123,7 +123,7 @@ class RegisterActivity : AppCompatActivity() {
 
             val isNameValidated = name.isNotEmpty()
             val isEmailValidated = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-            val isPasswordValidated = password.isNotEmpty() && password.length > 8
+            val isPasswordValidated = password.isNotEmpty() && password.length >= 8
 
             buttonRegister.isEnabled = isEmailValidated && isPasswordValidated && isNameValidated
         }

@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
             password = etPassword.text.toString()
 
             val isEmailValidated = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-            val isPasswordValidated = password.isNotEmpty() && password.length > 8
+            val isPasswordValidated = password.isNotEmpty() && password.length >= 8
 
             buttonLogin.isEnabled = isEmailValidated && isPasswordValidated
         }
