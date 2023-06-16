@@ -1,4 +1,4 @@
-package com.example.dicodingstory.ui.activity
+package com.example.dicodingstory.ui.activity.detailstory
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator

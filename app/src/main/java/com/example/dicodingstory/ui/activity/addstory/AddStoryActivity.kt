@@ -25,7 +25,7 @@ import androidx.core.content.FileProvider
 import com.example.dicodingstory.databinding.ActivityAddStoryBinding
 import com.example.dicodingstory.databinding.LayoutAddPhotoBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
-import com.example.dicodingstory.ui.activity.CameraActivity
+import com.example.dicodingstory.ui.activity.camera.CameraActivity
 import com.example.dicodingstory.ui.activity.main.MainActivity
 import com.example.dicodingstory.utils.createCustomTempFile
 import com.example.dicodingstory.utils.hideLoading

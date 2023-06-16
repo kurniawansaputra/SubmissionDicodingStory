@@ -1,4 +1,4 @@
-package com.example.dicodingstory.ui.activity
+package com.example.dicodingstory.ui.activity.maps
 
 import android.content.res.Resources
 import android.os.Bundle

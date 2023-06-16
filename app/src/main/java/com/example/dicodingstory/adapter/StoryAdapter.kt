@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ItemRowStoryBinding
 import com.example.dicodingstory.data.remote.response.ListStoryItem
-import com.example.dicodingstory.ui.activity.DetailStoryActivity
-import com.example.dicodingstory.ui.activity.DetailStoryActivity.Companion.EXTRA_STORY
+import com.example.dicodingstory.ui.activity.detailstory.DetailStoryActivity
+import com.example.dicodingstory.ui.activity.detailstory.DetailStoryActivity.Companion.EXTRA_STORY
 import kotlin.random.Random
 
 class StoryAdapter(private var storyList: List<ListStoryItem>, private val context: Context): RecyclerView.Adapter<StoryAdapter.ViewHolder>() {

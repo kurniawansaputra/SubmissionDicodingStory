@@ -1,4 +1,4 @@
-package com.example.dicodingstory.ui.activity
+package com.example.dicodingstory.ui.activity.camera
 
 import android.content.Intent
 import android.os.Bundle

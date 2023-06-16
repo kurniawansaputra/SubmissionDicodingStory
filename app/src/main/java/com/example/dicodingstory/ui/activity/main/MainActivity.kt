@@ -17,7 +17,7 @@ import com.example.dicodingstory.databinding.ActivityMainBinding
 import com.example.dicodingstory.databinding.LayoutWarningBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.data.remote.response.ListStoryItem
-import com.example.dicodingstory.ui.activity.MapsActivity
+import com.example.dicodingstory.ui.activity.maps.MapsActivity
 import com.example.dicodingstory.ui.activity.addstory.AddStoryActivity
 import com.example.dicodingstory.ui.activity.login.LoginActivity
 import com.example.dicodingstory.utils.hideLoading
