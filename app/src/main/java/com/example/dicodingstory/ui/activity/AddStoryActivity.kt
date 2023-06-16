@@ -37,6 +37,8 @@ import java.io.File
 class AddStoryActivity : AppCompatActivity() {
     private lateinit var token: String
     private lateinit var description: String
+    private var lat: Double = 0.0
+    private var lon: Double = 0.0
     private var myFile: File? = null
     private var getFile: File? = null
     private lateinit var currentPhotoPath: String
@@ -92,6 +94,8 @@ class AddStoryActivity : AppCompatActivity() {
     private fun setPref() {
         val user = HawkStorage.instance(this).getUser()
         token = user.loginResult?.token.toString()
+        lat = -6.965619184833575
+        lon = 107.57830128158919
     }
 
     private fun setToolbar() {
@@ -256,7 +260,7 @@ class AddStoryActivity : AppCompatActivity() {
     private fun uploadStory() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File)
-            addStoryViewModel.addStories(token, description, file)
+            addStoryViewModel.addStories(token, description, file, lat, lon)
         } else {
             Toast.makeText(this@AddStoryActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
         }

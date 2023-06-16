@@ -25,7 +25,7 @@ class MainViewModel: ViewModel() {
 
     fun getStories(token: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getStories("Bearer $token")
+        val client = ApiConfig.getApiService().getStories("Bearer $token", 1)
         client.enqueue(object : Callback<StoriesResponse> {
             override fun onResponse(call: Call<StoriesResponse>, response: Response<StoriesResponse>) {
                 _isRefresh.value = false

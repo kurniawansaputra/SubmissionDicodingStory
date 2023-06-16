@@ -26,8 +26,10 @@ class AddStoryViewModel : ViewModel() {
     private val _onFailure = MutableLiveData<String>()
     val onFailure: LiveData<String> = _onFailure
 
-    fun addStories(token: String, description: String, file: File) {
+    fun addStories(token: String, description: String, file: File, lat: Double, lon: Double) {
         val requestDescription = description.toRequestBody("text/plain".toMediaType())
+        val requestLat = lat.toString().toRequestBody("text/plain".toMediaType())
+        val requestLon = lon.toString().toRequestBody("text/plain".toMediaType())
         val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
             "photo",
@@ -36,7 +38,7 @@ class AddStoryViewModel : ViewModel() {
         )
 
         _isLoading.value = true
-        val client = ApiConfig.getApiService().newStory("Bearer $token", imageMultipart, requestDescription)
+        val client = ApiConfig.getApiService().newStory("Bearer $token", imageMultipart, requestDescription, requestLat, requestLon)
         client.enqueue(object : Callback<NewStoryResponse> {
             override fun onResponse(call: Call<NewStoryResponse>, response: Response<NewStoryResponse>) {
                 _isLoading.value = false
