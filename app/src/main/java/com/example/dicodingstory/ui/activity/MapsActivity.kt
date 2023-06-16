@@ -4,8 +4,8 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.R
 import com.example.dicodingstory.databinding.ActivityMapsBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var token: String
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel by viewModels<MainViewModel>()
 
     private lateinit var mMap: GoogleMap
 
@@ -78,8 +78,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun init() {
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
         setPref()
     }
 

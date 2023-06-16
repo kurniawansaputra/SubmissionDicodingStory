@@ -16,12 +16,12 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.databinding.ActivityAddStoryBinding
 import com.example.dicodingstory.databinding.LayoutAddPhotoBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
@@ -42,7 +42,7 @@ class AddStoryActivity : AppCompatActivity() {
     private var myFile: File? = null
     private var getFile: File? = null
     private lateinit var currentPhotoPath: String
-    private lateinit var addStoryViewModel: AddStoryViewModel
+    private val addStoryViewModel by viewModels<AddStoryViewModel>()
 
     private lateinit var binding: ActivityAddStoryBinding
 
@@ -82,8 +82,6 @@ class AddStoryActivity : AppCompatActivity() {
             )
         }
 
-        addStoryViewModel = ViewModelProvider(this)[AddStoryViewModel::class.java]
-
         setObsAddStory()
         setPref()
         setToolbar()
@@ -94,8 +92,8 @@ class AddStoryActivity : AppCompatActivity() {
     private fun setPref() {
         val user = HawkStorage.instance(this).getUser()
         token = user.loginResult?.token.toString()
-        lat = -6.965619184833575
-        lon = 107.57830128158919
+        lat = -0.02807932546533127
+        lon = 109.35006589013962
     }
 
     private fun setToolbar() {
@@ -155,7 +153,7 @@ class AddStoryActivity : AppCompatActivity() {
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
             myFile?.let { file ->
                 rotateFile(file, isBackCamera)
-                getFile = file
+                getFile = reduceFileImage(file)
                 binding.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
 
@@ -195,7 +193,7 @@ class AddStoryActivity : AppCompatActivity() {
                     rotateFile(file)
                 }
                 if (file != null) {
-                    getFile = file
+                    getFile = reduceFileImage(file)
                     binding.ivPhoto.setImageBitmap(BitmapFactory.decodeFile(file.path))
                 }
             }
@@ -225,7 +223,7 @@ class AddStoryActivity : AppCompatActivity() {
             val selectedImg = result.data?.data as Uri
             selectedImg.let { uri ->
                 myFile = uriToFile(uri, this@AddStoryActivity)
-                getFile = myFile
+                getFile = reduceFileImage(myFile!!)
                 binding.ivPhoto.setImageURI(uri)
 
                 if (myFile!!.exists()) {
@@ -259,7 +257,7 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun uploadStory() {
         if (getFile != null) {
-            val file = reduceFileImage(getFile as File)
+            val file = getFile as File
             addStoryViewModel.addStories(token, description, file, lat, lon)
         } else {
             Toast.makeText(this@AddStoryActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()

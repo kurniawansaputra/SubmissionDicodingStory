@@ -8,9 +8,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.R
 import com.example.dicodingstory.adapter.StoryAdapter
 import com.example.dicodingstory.databinding.ActivityMainBinding
@@ -23,7 +23,7 @@ import com.example.dicodingstory.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var token: String
-    private lateinit var mainViewModel: MainViewModel
+    private val mainViewModel by viewModels<MainViewModel>()
 
     private lateinit var binding: ActivityMainBinding
 
@@ -37,8 +37,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
         setObsListStories()
         setPref()
         setToolbar()

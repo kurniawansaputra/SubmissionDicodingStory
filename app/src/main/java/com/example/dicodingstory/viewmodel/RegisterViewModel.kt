@@ -4,11 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.dicodingstory.model.RegisterResponse
 import com.example.dicodingstory.network.ApiConfig
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RegisterViewModel: ViewModel() {
     private val _register = MutableLiveData<RegisterResponse>()
@@ -22,24 +23,21 @@ class RegisterViewModel: ViewModel() {
 
     fun register(name: String, email: String, password: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().register(name, email, password)
-        client.enqueue(object : Callback<RegisterResponse> {
-            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _register.value = response.body() as RegisterResponse
-                } else {
-                    _onFailure.value = response.message()
-                    Log.e(TAG, "onFailure: ${response.message()}")
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiService().register(name, email, password)
+                withContext(Dispatchers.Main) {
+                    _isLoading.value = false
+                    _register.value = response
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    _isLoading.value = false
+                    _onFailure.value = e.message
+                    Log.e(TAG, "onFailure: ${e.message.toString()}")
                 }
             }
-
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                _isLoading.value = false
-                _onFailure.value = t.message
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
-            }
-        })
+        }
     }
 
     companion object {

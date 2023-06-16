@@ -6,8 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.databinding.ActivityLoginBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.util.hideLoading
@@ -17,7 +17,7 @@ import com.example.dicodingstory.viewmodel.LoginViewModel
 class LoginActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var password: String
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -31,8 +31,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        loginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-
         setObsLogin()
         textWatcher()
         setListener()

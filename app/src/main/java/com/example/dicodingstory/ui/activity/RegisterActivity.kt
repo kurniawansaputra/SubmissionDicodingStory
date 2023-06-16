@@ -6,8 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingstory.databinding.ActivityRegisterBinding
 import com.example.dicodingstory.util.hideLoading
 import com.example.dicodingstory.util.showLoading
@@ -17,7 +17,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var name: String
     private lateinit var email: String
     private lateinit var password: String
-    private lateinit var registerViewModel: RegisterViewModel
+    private val registerViewModel by viewModels<RegisterViewModel>()
 
     private lateinit var binding: ActivityRegisterBinding
 
@@ -31,8 +31,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
-
         setObsRegister()
         setToolbar()
         textWatcher()

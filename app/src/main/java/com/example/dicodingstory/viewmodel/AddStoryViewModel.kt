@@ -4,16 +4,17 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.dicodingstory.model.NewStoryResponse
 import com.example.dicodingstory.network.ApiConfig
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 
 class AddStoryViewModel : ViewModel() {
@@ -38,24 +39,21 @@ class AddStoryViewModel : ViewModel() {
         )
 
         _isLoading.value = true
-        val client = ApiConfig.getApiService().newStory("Bearer $token", imageMultipart, requestDescription, requestLat, requestLon)
-        client.enqueue(object : Callback<NewStoryResponse> {
-            override fun onResponse(call: Call<NewStoryResponse>, response: Response<NewStoryResponse>) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _add.value = response.body() as NewStoryResponse
-                } else {
-                    _onFailure.value = response.message()
-                    Log.e(TAG, "onFailure: ${response.message()}")
+        viewModelScope.launch {
+            try {
+                val response = ApiConfig.getApiService().newStory("Bearer $token", imageMultipart, requestDescription, requestLat, requestLon)
+                withContext(Dispatchers.Main) {
+                    _isLoading.value = false
+                    _add.value = response
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    _isLoading.value = false
+                    _onFailure.value = e.message
+                    Log.e(TAG, "onFailure: ${e.message.toString()}")
                 }
             }
-
-            override fun onFailure(call: Call<NewStoryResponse>, t: Throwable) {
-                _isLoading.value = false
-                _onFailure.value = t.message
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
-            }
-        })
+        }
     }
 
     companion object {
