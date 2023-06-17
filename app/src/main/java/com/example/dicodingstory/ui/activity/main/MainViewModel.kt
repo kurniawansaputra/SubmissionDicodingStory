@@ -1,15 +1,12 @@
 package com.example.dicodingstory.ui.activity.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.data.remote.response.StoriesResponse
 import com.example.dicodingstory.data.remote.network.ApiConfig
-import kotlinx.coroutines.Dispatchers
+import com.example.dicodingstory.data.remote.response.StoriesResponse
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainViewModel: ViewModel() {
     private val _stories = MutableLiveData<StoriesResponse>()
@@ -29,23 +26,13 @@ class MainViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = ApiConfig.getApiService().getStories("Bearer $token", 1)
-                withContext(Dispatchers.Main) {
-                    _isRefresh.value = false
-                    _isLoading.value = false
-                    _stories.value = response
-                }
+                _stories.value = response
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    _isRefresh.value = false
-                    _isLoading.value = false
-                    _onFailure.value = e.message
-                    Log.e(TAG, "onFailure: ${e.message.toString()}")
-                }
+                _onFailure.value = e.message
+            } finally {
+                _isLoading.value = false
+                _isRefresh.value = false
             }
         }
-    }
-
-    companion object {
-        private const val TAG = "MainViewModel"
     }
 }

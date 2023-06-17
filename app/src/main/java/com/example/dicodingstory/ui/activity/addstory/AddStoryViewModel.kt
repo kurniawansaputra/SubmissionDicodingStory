@@ -1,15 +1,12 @@
 package com.example.dicodingstory.ui.activity.addstory
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.data.remote.response.NewStoryResponse
 import com.example.dicodingstory.data.remote.network.ApiConfig
-import kotlinx.coroutines.Dispatchers
+import com.example.dicodingstory.data.remote.response.NewStoryResponse
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -42,21 +39,12 @@ class AddStoryViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = ApiConfig.getApiService().newStory("Bearer $token", imageMultipart, requestDescription, requestLat, requestLon)
-                withContext(Dispatchers.Main) {
-                    _isLoading.value = false
-                    _add.value = response
-                }
+                _add.value = response
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    _isLoading.value = false
-                    _onFailure.value = e.message
-                    Log.e(TAG, "onFailure: ${e.message.toString()}")
-                }
+                _onFailure.value = e.message
+            } finally {
+                _isLoading.value = false
             }
         }
-    }
-
-    companion object {
-        private const val TAG = "AddStoryViewModel"
     }
 }

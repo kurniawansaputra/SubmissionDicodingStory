@@ -1,15 +1,12 @@
 package com.example.dicodingstory.ui.activity.register
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.data.remote.response.RegisterResponse
 import com.example.dicodingstory.data.remote.network.ApiConfig
-import kotlinx.coroutines.Dispatchers
+import com.example.dicodingstory.data.remote.response.RegisterResponse
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class RegisterViewModel: ViewModel() {
     private val _register = MutableLiveData<RegisterResponse>()
@@ -26,21 +23,12 @@ class RegisterViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val response = ApiConfig.getApiService().register(name, email, password)
-                withContext(Dispatchers.Main) {
-                    _isLoading.value = false
-                    _register.value = response
-                }
+                _register.value = response
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    _isLoading.value = false
-                    _onFailure.value = e.message
-                    Log.e(TAG, "onFailure: ${e.message.toString()}")
-                }
+                _onFailure.value = e.message
+            } finally {
+                _isLoading.value = false
             }
         }
-    }
-
-    companion object {
-        private const val TAG = "RegisterViewModel"
     }
 }
