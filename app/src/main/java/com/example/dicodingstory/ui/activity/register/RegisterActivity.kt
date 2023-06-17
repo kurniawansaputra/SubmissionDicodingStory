@@ -17,7 +17,11 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var name: String
     private lateinit var email: String
     private lateinit var password: String
-    private val registerViewModel by viewModels<RegisterViewModel>()
+
+    private val factory: RegisterViewModelFactory = RegisterViewModelFactory.getInstance()
+    private val registerViewModel: RegisterViewModel by viewModels {
+        factory
+    }
 
     private lateinit var binding: ActivityRegisterBinding
 

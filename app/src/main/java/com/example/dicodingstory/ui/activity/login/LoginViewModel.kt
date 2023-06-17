@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.data.remote.network.ApiConfig
 import com.example.dicodingstory.data.remote.response.UserResponse
+import com.example.dicodingstory.repository.LoginRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
     private val _login = MutableLiveData<UserResponse>()
     val login: LiveData<UserResponse> = _login
 
@@ -22,7 +22,7 @@ class LoginViewModel : ViewModel() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = ApiConfig.getApiService().login(email, password)
+                val response = loginRepository.login(email, password)
                 _login.value = response
             } catch (e: Exception) {
                 _onFailure.value = e.message

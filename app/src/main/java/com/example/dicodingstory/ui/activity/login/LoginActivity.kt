@@ -18,7 +18,11 @@ import com.example.dicodingstory.utils.showLoading
 class LoginActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var password: String
-    private val loginViewModel by viewModels<LoginViewModel>()
+
+    private val factory: LoginViewModelFactory = LoginViewModelFactory.getInstance()
+    private val loginViewModel: LoginViewModel by viewModels {
+        factory
+    }
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -32,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init() {
+
         setObsLogin()
         textWatcher()
         setListener()

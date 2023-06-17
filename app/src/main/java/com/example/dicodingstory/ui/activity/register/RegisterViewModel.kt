@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingstory.data.remote.network.ApiConfig
 import com.example.dicodingstory.data.remote.response.RegisterResponse
+import com.example.dicodingstory.repository.RegisterRepository
 import kotlinx.coroutines.launch
 
-class RegisterViewModel: ViewModel() {
+class RegisterViewModel(private val registerRepository: RegisterRepository): ViewModel() {
     private val _register = MutableLiveData<RegisterResponse>()
     val register: LiveData<RegisterResponse> = _register
 
@@ -22,7 +22,7 @@ class RegisterViewModel: ViewModel() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val response = ApiConfig.getApiService().register(name, email, password)
+                val response = registerRepository.register(name, email, password)
                 _register.value = response
             } catch (e: Exception) {
                 _onFailure.value = e.message
