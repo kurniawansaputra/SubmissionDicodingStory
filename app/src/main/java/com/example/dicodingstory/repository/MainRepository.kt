@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.dicodingstory.data.remote.Result
 import com.example.dicodingstory.data.remote.network.ApiService
-import com.example.dicodingstory.data.remote.response.RegisterResponse
+import com.example.dicodingstory.data.remote.response.StoriesResponse
 
-class RegisterRepository private constructor(private val apiService: ApiService) {
-    fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> = liveData {
+class MainRepository private constructor(private val apiService: ApiService){
+    fun getStories(token: String) : LiveData<Result<StoriesResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.register(name, email, password)
+            val response = apiService.getStories("Bearer $token", 1)
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
@@ -19,12 +19,12 @@ class RegisterRepository private constructor(private val apiService: ApiService)
 
     companion object {
         @Volatile
-        private var instance: RegisterRepository? = null
+        private var instance: MainRepository? = null
         fun getInstance(
             apiService: ApiService,
-        ): RegisterRepository =
+        ): MainRepository =
             instance ?: synchronized(this) {
-                instance ?: RegisterRepository(apiService)
+                instance ?: MainRepository(apiService)
             }.also { instance = it }
     }
 }

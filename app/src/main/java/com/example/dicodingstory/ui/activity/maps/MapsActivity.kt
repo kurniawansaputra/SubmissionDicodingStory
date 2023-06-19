@@ -7,9 +7,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dicodingstory.R
+import com.example.dicodingstory.data.remote.Result
 import com.example.dicodingstory.databinding.ActivityMapsBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.ui.activity.main.MainViewModel
+import com.example.dicodingstory.ui.activity.main.MainViewModelFactory
+import com.example.dicodingstory.utils.hideLoading
+import com.example.dicodingstory.utils.showLoading
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,7 +26,11 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var token: String
-    private val mainViewModel by viewModels<MainViewModel>()
+
+    private val factory: MainViewModelFactory = MainViewModelFactory.getInstance()
+    private val mainViewModel: MainViewModel by viewModels {
+        factory
+    }
 
     private lateinit var mMap: GoogleMap
 
@@ -100,29 +108,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val boundsBuilder = LatLngBounds.Builder()
     private fun addManyMarker() {
-        mainViewModel.getStories(token)
-        mainViewModel.onFailure.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-        mainViewModel.stories.observe(this) {
-            val error = it.error
-            if (error == false) {
-                val listStory = it.listStory
-                listStory?.forEach { story ->
-                    val latLng = LatLng(story?.lat!!, story.lon!!)
-                    mMap.addMarker(MarkerOptions().position(latLng).title(story.name))?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
-                    boundsBuilder.include(latLng)
-                }
+        mainViewModel.getStories(token).observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
+                        setLoading(true)
+                    }
+                    is Result.Success -> {
+                        setLoading(false)
+                        val error = it.data.error
+                        if (error == false) {
+                            val listStory = it.data.listStory
+                            listStory?.forEach { story ->
+                                val latLng = LatLng(story?.lat!!, story.lon!!)
+                                mMap.addMarker(MarkerOptions().position(latLng).title(story.name))?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
+                                boundsBuilder.include(latLng)
+                            }
 
-                val bounds: LatLngBounds = boundsBuilder.build()
-                mMap.animateCamera(
-                    CameraUpdateFactory.newLatLngBounds(
-                        bounds,
-                        resources.displayMetrics.widthPixels,
-                        resources.displayMetrics.heightPixels,
-                        300
-                    )
-                )
+                            val bounds: LatLngBounds = boundsBuilder.build()
+                            mMap.animateCamera(
+                                CameraUpdateFactory.newLatLngBounds(
+                                    bounds,
+                                    resources.displayMetrics.widthPixels,
+                                    resources.displayMetrics.heightPixels,
+                                    300
+                                )
+                            )
+                        }
+                    }
+                    is Result.Error -> {
+                        setLoading(false)
+                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
@@ -148,6 +166,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //                getMyLocation()
 //            }
 //        }
+    private fun setLoading(isLoading: Boolean) {
+        if (isLoading) {
+            showLoading(this)
+        } else {
+            hideLoading()
+        }
+    }
 
     companion object {
         private const val TAG = "MapsActivity"

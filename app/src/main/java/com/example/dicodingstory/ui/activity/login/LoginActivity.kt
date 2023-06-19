@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dicodingstory.data.remote.Result
 import com.example.dicodingstory.databinding.ActivityLoginBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.ui.activity.main.MainActivity
@@ -36,8 +37,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init() {
-
-        setObsLogin()
         textWatcher()
         setListener()
         checkIsLogin()
@@ -46,11 +45,11 @@ class LoginActivity : AppCompatActivity() {
     private fun setListener() {
         binding.apply {
             buttonLogin.setOnClickListener {
-                loginViewModel.login(email, password)
+                login()
             }
 
             labelRegister.setOnClickListener {
-                val  intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -100,21 +99,26 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun setObsLogin() {
-        loginViewModel.isLoading.observe(this) {
-            setLoading(it)
-        }
-        loginViewModel.onFailure.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-        loginViewModel.login.observe(this@LoginActivity) {
-            val user = it
-            val error = it.error
-
-            if (error == false) {
-                if (user != null) {
-                    HawkStorage.instance(this@LoginActivity).setUser(user)
-                    goToMain()
+    private fun login() {
+        loginViewModel.login(email, password).observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
+                        setLoading(true)
+                    }
+                    is Result.Success -> {
+                        setLoading(false)
+                        val user = it.data
+                        val error = it.data.error
+                        if (error == false) {
+                            HawkStorage.instance(this).setUser(user)
+                            goToMain()
+                        }
+                    }
+                    is Result.Error -> {
+                        setLoading(false)
+                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

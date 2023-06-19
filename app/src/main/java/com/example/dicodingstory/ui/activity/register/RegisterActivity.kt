@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dicodingstory.data.remote.Result
 import com.example.dicodingstory.databinding.ActivityRegisterBinding
 import com.example.dicodingstory.ui.activity.login.LoginActivity
 import com.example.dicodingstory.utils.hideLoading
@@ -35,7 +36,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        setObsRegister()
         setToolbar()
         textWatcher()
         setListener()
@@ -52,7 +52,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun setListener() {
         binding.apply {
             buttonRegister.setOnClickListener {
-                registerViewModel.register(name, email, password)
+                register()
             }
         }
     }
@@ -117,20 +117,27 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun setObsRegister() {
-        registerViewModel.isLoading.observe(this) {
-            setLoading(it)
-        }
-        registerViewModel.onFailure.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        }
-        registerViewModel.register.observe(this@RegisterActivity) {
-            val error = it.error
-            val message = it.message
-
-            if (error == false) {
-                goToLogin()
-                Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
+    private fun register() {
+        registerViewModel.register(name, email, password).observe(this) {
+            if (it != null) {
+                when (it) {
+                    is Result.Loading -> {
+                        setLoading(true)
+                    }
+                    is Result.Success -> {
+                        setLoading(false)
+                        val error = it.data.error
+                        val message = it.data.message
+                        if (error == false) {
+                            goToLogin()
+                            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    is Result.Error -> {
+                        setLoading(false)
+                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
