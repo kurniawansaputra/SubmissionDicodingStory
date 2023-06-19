@@ -4,26 +4,21 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.os.IResultReceiver._Parcel
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dicodingstory.R
+import com.example.dicodingstory.adapter.LoadingStateAdapter
 import com.example.dicodingstory.adapter.StoryAdapter
-import com.example.dicodingstory.data.remote.Result
-import com.example.dicodingstory.data.remote.response.ListStoryItem
 import com.example.dicodingstory.databinding.ActivityMainBinding
 import com.example.dicodingstory.databinding.LayoutWarningBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.ui.activity.addstory.AddStoryActivity
 import com.example.dicodingstory.ui.activity.login.LoginActivity
 import com.example.dicodingstory.ui.activity.maps.MapsActivity
-import com.example.dicodingstory.utils.hideLoading
-import com.example.dicodingstory.utils.showLoading
 
 class MainActivity : AppCompatActivity() {
     private lateinit var token: String
@@ -47,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         setPref()
         setToolbar()
-        swipeRefresh()
+//        swipeRefresh()
         setListStory()
         setListener()
     }
@@ -72,49 +67,59 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListStory() {
-        mainViewModel.getStories(token).observe(this) {
-            if (it != null) {
-                when (it) {
-                    is Result.Loading -> {
-                        setLoading(true)
-                    }
-                    is Result.Success -> {
-                        setLoading(false)
-                        setRefresh(false)
-                        val error = it.data.error
-                        if (error == false) {
-                            val storyAdapter = StoryAdapter(it.data.listStory as List<ListStoryItem>, this)
-                            binding.rvStories.adapter = storyAdapter
-                            binding.rvStories.setHasFixedSize(true)
-                        }
-                    }
-                    is Result.Error -> {
-                        setLoading(false)
-                        setRefresh(false)
-                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
-                    }
-                }
+        val storyAdapter = StoryAdapter(this)
+        binding.rvStories.adapter = storyAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                storyAdapter.retry()
             }
+        )
+
+        mainViewModel.getStoriesPaging("Bearer $token").observe(this) {
+            storyAdapter.submitData(lifecycle, it)
         }
+//        mainViewModel.stories.observe(this)
+//            if (it != null) {
+//                when (it) {
+//                    is Result.Loading -> {
+//                        setLoading(true)
+//                    }
+//                    is Result.Success -> {
+//                        setLoading(false)
+//                        setRefresh(false)
+//                        val error = it.data.error
+//                        if (error == false) {
+//                            val storyAdapter = StoryAdapter(it.data.listStory as List<ListStoryItem>, this)
+//                            binding.rvStories.adapter = storyAdapter
+//                            binding.rvStories.setHasFixedSize(true)
+//                        }
+//                    }
+//                    is Result.Error -> {
+//                        setLoading(false)
+//                        setRefresh(false)
+//                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//        }
     }
 
-    private fun setRefresh(isRefresh: Boolean) {
-        binding.swipeRefresh.isRefreshing = isRefresh
-    }
-
-    private fun swipeRefresh() {
-        binding.swipeRefresh.setOnRefreshListener {
-            setListStory()
-        }
-    }
-
-    private fun setLoading(isLoading: Boolean) {
-        if (isLoading) {
-            showLoading(this)
-        } else {
-            hideLoading()
-        }
-    }
+//    private fun setRefresh(isRefresh: Boolean) {
+//        binding.swipeRefresh.isRefreshing = isRefresh
+//    }
+//
+//    private fun swipeRefresh() {
+//        binding.swipeRefresh.setOnRefreshListener {
+//            setListStory()
+//        }
+//    }
+//
+//    private fun setLoading(isLoading: Boolean) {
+//        if (isLoading) {
+//            showLoading(this)
+//        } else {
+//            hideLoading()
+//        }
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater

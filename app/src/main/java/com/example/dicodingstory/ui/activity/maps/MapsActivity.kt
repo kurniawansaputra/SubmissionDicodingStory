@@ -117,10 +117,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     is Result.Success -> {
                         setLoading(false)
                         val error = it.data.error
-                        if (error == false) {
+                        if (!error) {
                             val listStory = it.data.listStory
-                            listStory?.forEach { story ->
-                                val latLng = LatLng(story?.lat!!, story.lon!!)
+                            listStory.forEach { story ->
+                                val latLng = LatLng(story.lat, story.lon)
                                 mMap.addMarker(MarkerOptions().position(latLng).title(story.name))?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location))
                                 boundsBuilder.include(latLng)
                             }
