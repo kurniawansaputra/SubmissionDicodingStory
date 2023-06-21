@@ -34,6 +34,10 @@ import com.example.dicodingstory.utils.reduceFileImage
 import com.example.dicodingstory.utils.rotateFile
 import com.example.dicodingstory.utils.showLoading
 import com.example.dicodingstory.utils.uriToFile
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {
@@ -262,27 +266,41 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun uploadStory() {
         if (getFile != null) {
-            val file = reduceFileImage(getFile as File)
-            addStoryViewModel.addStories(token, description, file, lat, lon).observe(this) {
-                if (it != null) {
-                    when (it) {
-                        is Result.Loading -> {
-                            setLoading(true)
-                        }
-                        is Result.Success -> {
-                            setLoading(false)
-                            val error = it.data.error
-                            val message = it.data.message
-                            if (error == false) {
-                                goToMain()
-                                Toast.makeText(this, "$message", Toast.LENGTH_SHORT).show()
+            setLoading(true)
+            val file = getFile as File
+            val scope = CoroutineScope(Dispatchers.Main)
+            scope.launch {
+                try {
+                    val reducedFile = withContext(Dispatchers.IO) {
+                        reduceFileImage(file)
+                    }
+                    addStoryViewModel.addStories(token, description, reducedFile, lat, lon).observe(this@AddStoryActivity) {
+                        if (it != null) {
+                            when (it) {
+                                is Result.Loading -> {
+                                    setLoading(true)
+                                }
+                                is Result.Success -> {
+                                    setLoading(false)
+                                    val error = it.data.error
+                                    val message = it.data.message
+                                    if (error == false) {
+                                        goToMain()
+                                        Toast.makeText(this@AddStoryActivity, "$message", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                                is Result.Error -> {
+                                    setLoading(false)
+                                    Toast.makeText(this@AddStoryActivity, it.error, Toast.LENGTH_SHORT).show()
+                                }
                             }
                         }
-                        is Result.Error -> {
-                            setLoading(false)
-                            Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
-                        }
                     }
+                } catch (e: Exception) {
+                    setLoading(false)
+                    Toast.makeText(this@AddStoryActivity, "$e", Toast.LENGTH_SHORT).show()
+                } finally {
+                    setLoading(false)
                 }
             }
         } else {

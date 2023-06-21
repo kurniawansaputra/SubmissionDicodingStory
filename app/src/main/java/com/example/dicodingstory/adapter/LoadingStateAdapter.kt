@@ -19,15 +19,15 @@ class LoadingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Load
     class LoadingStateViewHolder(private val binding: ItemLoadingBinding, retry: () -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.retryButton.setOnClickListener { retry.invoke() }
+            binding.labelTryAgain.setOnClickListener { retry.invoke() }
         }
         fun bind(loadState: LoadState) {
             if (loadState is LoadState.Error) {
-                binding.errorMsg.text = loadState.error.localizedMessage
+                binding.textErrorMsg.text = loadState.error.localizedMessage
             }
             binding.progressBar.isVisible = loadState is LoadState.Loading
-            binding.retryButton.isVisible = loadState is LoadState.Error
-            binding.errorMsg.isVisible = loadState is LoadState.Error
+            binding.labelTryAgain.isVisible = loadState is LoadState.Error
+            binding.textErrorMsg.isVisible = loadState is LoadState.Error
         }
     }
 }
