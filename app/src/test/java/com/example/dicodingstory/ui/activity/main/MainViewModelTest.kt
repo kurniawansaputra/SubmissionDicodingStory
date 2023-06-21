@@ -63,7 +63,7 @@ class MainViewModelTest {
         assertNotNull(differ.snapshot())
         assertEquals(dummyStories.listStory, differ.snapshot())
         assertEquals(dummyStories.listStory.size, differ.snapshot().size)
-        assertEquals(dummyStories.listStory[0].id, differ.snapshot()[0]?.id)
+        assertEquals(dummyStories.listStory[0], differ.snapshot()[0])
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
