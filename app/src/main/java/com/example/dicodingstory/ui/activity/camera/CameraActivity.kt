@@ -1,7 +1,10 @@
 package com.example.dicodingstory.ui.activity.camera
 
 import android.content.Intent
+import android.graphics.Outline
 import android.os.Bundle
+import android.view.View
+import android.view.ViewOutlineProvider
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -63,10 +66,22 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun startCamera() {
+        // to create shape oval
+        binding.apply {
+            viewFinder.outlineProvider = object : ViewOutlineProvider() {
+                override fun getOutline(view: View, outline: Outline) {
+                    val radius = view.width.coerceAtMost(view.height) / 2
+                    outline.setRoundRect(0, 0, view.width, view.height, radius.toFloat())
+                }
+            }
+            viewFinder.clipToOutline = true
+        }
+
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
             val preview = Preview.Builder()
                 .build()
                 .also {

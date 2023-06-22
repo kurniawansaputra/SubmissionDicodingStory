@@ -62,44 +62,37 @@
                 android:id="@+id/viewFinder"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
+            <ImageView
+                android:id="@+id/ivCapture"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_capture"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewFinder"
+                tools:ignore="ImageContrastCheck" />
 
-                <ImageView
-                    android:id="@+id/ivCapture"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:contentDescription="@string/content_description"
-                    android:src="@drawable/ic_capture"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ImageContrastCheck" />
-
-                <ImageView
-                    android:id="@+id/ivSwitch"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:contentDescription="@string/content_description"
-                    android:src="@drawable/ic_switch"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ivCapture"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ImageContrastCheck" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/ivSwitch"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_switch"
+                app:layout_constraintBottom_toBottomOf="@+id/ivCapture"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivCapture"
+                app:layout_constraintTop_toTopOf="@+id/ivCapture"
+                tools:ignore="ImageContrastCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
