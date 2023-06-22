@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dicodingstory.data.remote.Result
 import com.example.dicodingstory.databinding.ActivityRegisterBinding
 import com.example.dicodingstory.ui.activity.login.LoginActivity
-import com.example.dicodingstory.utils.hideLoading
+import com.example.dicodingstory.utils.dismissLoading
 import com.example.dicodingstory.utils.showLoading
 
 class RegisterActivity : AppCompatActivity() {
@@ -153,7 +153,7 @@ class RegisterActivity : AppCompatActivity() {
         if (isLoading) {
             showLoading(this)
         } else {
-            hideLoading()
+            dismissLoading()
         }
     }
 }

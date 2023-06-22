@@ -13,7 +13,7 @@ import com.example.dicodingstory.databinding.ActivityLoginBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.ui.activity.main.MainActivity
 import com.example.dicodingstory.ui.activity.register.RegisterActivity
-import com.example.dicodingstory.utils.hideLoading
+import com.example.dicodingstory.utils.dismissLoading
 import com.example.dicodingstory.utils.showLoading
 
 class LoginActivity : AppCompatActivity() {
@@ -141,7 +141,7 @@ class LoginActivity : AppCompatActivity() {
         if (isLoading) {
             showLoading(this)
         } else {
-            hideLoading()
+            dismissLoading()
         }
     }
 }

@@ -12,7 +12,7 @@ import com.example.dicodingstory.databinding.ActivityMapsBinding
 import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.ui.activity.main.MainViewModel
 import com.example.dicodingstory.ui.activity.main.MainViewModelFactory
-import com.example.dicodingstory.utils.hideLoading
+import com.example.dicodingstory.utils.dismissLoading
 import com.example.dicodingstory.utils.showLoading
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -170,7 +170,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         if (isLoading) {
             showLoading(this)
         } else {
-            hideLoading()
+            dismissLoading()
         }
     }
 

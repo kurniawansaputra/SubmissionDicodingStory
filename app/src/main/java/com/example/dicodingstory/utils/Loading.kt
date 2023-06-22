@@ -17,7 +17,7 @@ fun showLoading(context: Context) {
     dialogBuilder?.show()
 }
 
-fun hideLoading() {
+fun dismissLoading() {
     if (dialogBuilder != null){
         dialogBuilder?.dismiss()
     }

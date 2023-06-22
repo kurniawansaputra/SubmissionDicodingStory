@@ -29,7 +29,7 @@ import com.example.dicodingstory.hawkstorage.HawkStorage
 import com.example.dicodingstory.ui.activity.camera.CameraActivity
 import com.example.dicodingstory.ui.activity.main.MainActivity
 import com.example.dicodingstory.utils.createCustomTempFile
-import com.example.dicodingstory.utils.hideLoading
+import com.example.dicodingstory.utils.dismissLoading
 import com.example.dicodingstory.utils.reduceFileImage
 import com.example.dicodingstory.utils.rotateFile
 import com.example.dicodingstory.utils.showLoading
@@ -330,7 +330,7 @@ class AddStoryActivity : AppCompatActivity() {
         if (isLoading) {
             showLoading(this)
         } else {
-            hideLoading()
+            dismissLoading()
         }
     }
 
