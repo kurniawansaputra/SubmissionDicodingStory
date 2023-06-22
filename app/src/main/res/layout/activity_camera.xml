@@ -23,7 +23,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:title="@string/camerax"
+                app:title="Prototype Face Photo"
                 app:titleTextAppearance="@style/TitleTextAppearance"
                 app:navigationIcon="@drawable/ic_back"
                 app:contentInsetStart="16dp"
@@ -62,18 +62,29 @@
                 android:id="@+id/viewFinder"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="32dp"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_face_guideline"
+                app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="@+id/viewFinder"
+                app:layout_constraintStart_toStartOf="@+id/viewFinder"
+                app:layout_constraintTop_toTopOf="@+id/viewFinder" />
+
+            <ImageView
                 android:id="@+id/ivCapture"
                 android:layout_width="84dp"
                 android:layout_height="84dp"
+                android:layout_marginTop="32dp"
                 android:contentDescription="@string/content_description"
                 android:src="@drawable/ic_capture"
                 app:layout_constraintBottom_toBottomOf="parent"
